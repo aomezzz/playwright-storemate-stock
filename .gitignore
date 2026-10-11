@@ -1,0 +1,23 @@
+# Node.js & Playwright
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.env
+
+# Robot Framework Output (Legacy)
+results/
+log.html
+report.html
+output.xml
+
+# Virtual Environment & Python cache
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# OS files
+Thumbs.db
+.DS_Store

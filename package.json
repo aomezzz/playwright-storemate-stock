@@ -1,0 +1,33 @@
+{
+  "name": "1-playwright-storemate",
+  "version": "1.0.0",
+  "description": "StoreMate Automated Testing Suite using Playwright (TypeScript)",
+  "scripts": {
+    "test": "playwright test",
+    "test:login": "playwright test tests/login.spec.ts",
+    "test:stocks": "playwright test tests/stocks.spec.ts",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aomezzz/robot-storemate-stock.git"
+  },
+  "keywords": [
+    "playwright",
+    "testing",
+    "storemate",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.5",
+    "dotenv": "^18.0.7",
+    "typescript": "^7.0.2"
+  }
+}
