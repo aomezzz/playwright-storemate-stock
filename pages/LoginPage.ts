@@ -11,7 +11,7 @@ export class LoginPage {
     this.page = page;
     this.emailInput = page.locator('#email, input[type="email"], input[placeholder*="email" i]');
     this.passwordInput = page.locator('#password, input[type="password"]');
-    this.loginButton = page.locator("main button:has-text('เข้าสู่ระบบ'), form button[type='submit'], button[data-test='login-button']");
+    this.loginButton = page.locator("button[data-test='btn-submit'], main button:has-text('เข้าสู่ระบบ'), form button[type='submit'], button[data-test='login-button']");
     this.dashboardHeading = page.locator("h1:has-text('แดชบอร์ด'), :text('แดชบอร์ด')");
   }
 

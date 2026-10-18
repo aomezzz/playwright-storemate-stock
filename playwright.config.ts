@@ -22,7 +22,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || 'https://storemate-final.vercel.app',
     trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
+    screenshot: 'on',
     video: 'retain-on-failure',
     headless: process.env.HEADLESS !== 'false',
     viewport: { width: 1920, height: 1080 },

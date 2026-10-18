@@ -44,7 +44,14 @@ export class StockPage {
     this.submitButton = page.locator("button[data-test^='submit-product'], button:has-text('บันทึก')");
     this.cancelButton = page.locator("button[data-test='cancel-edit-product'], button:has-text('ยกเลิก')");
     this.deleteButton = page.locator("button[data-test^='delete-product'], button:has-text('ลบสินค้า')");
+    this.toast = page.locator("[role='status'], .go4109123758, [role='alert']");
+    this.tableRows = page.locator('table tbody tr');
+    this.emptyState = page.locator('table tbody tr td:has-text("ไม่พบรายการสินค้าที่ค้นหา")');
   }
+
+  readonly toast: Locator;
+  readonly tableRows: Locator;
+  readonly emptyState: Locator;
 
   async goto() {
     // Try navigation via UI first, otherwise direct URL
@@ -142,17 +149,25 @@ export class StockPage {
   }
 
   async cancelForm() {
-    const isCancelVisible = await this.cancelButton.first().isVisible().catch(() => false);
-    if (isCancelVisible) {
-      await this.cancelButton.first().click();
-    } else {
-      await this.page.evaluate(() => {
-        const btn = document.querySelector("[data-test='cancel-edit-product']") ||
-          Array.from(document.querySelectorAll('button')).find(b => b.textContent?.includes('ยกเลิก'));
-        if (btn) (btn as HTMLElement).click();
-      });
+    const cancelBtn = this.page.locator("button[data-test='cancel-edit-product'], button:has-text('ยกเลิก')").first();
+    if (await cancelBtn.count() > 0) {
+      await cancelBtn.scrollIntoViewIfNeeded().catch(() => {});
+      await cancelBtn.click({ force: true }).catch(() => {});
+      await this.page.waitForTimeout(500);
+
+      // Check if discard confirmation dialog appears: "คุณต้องการละทิ้งการเปลี่ยนแปลงหรือไม่?"
+      const confirmDiscardBtn = this.page.locator("button:has-text('ยืนยัน')").first();
+      if (await confirmDiscardBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await confirmDiscardBtn.click();
+        await this.page.waitForTimeout(500);
+      }
     }
     await this.page.waitForTimeout(500);
+    if (await this.isModalOpen()) {
+      await this.page.keyboard.press('Escape').catch(() => {});
+      await this.page.waitForTimeout(300);
+    }
+    await this.modalContainer.first().waitFor({ state: 'hidden', timeout: 3000 }).catch(() => {});
   }
 
   async closeModalIfOpen() {
@@ -160,6 +175,7 @@ export class StockPage {
     if (isModalOpen) {
       await this.cancelForm();
     }
+    await this.page.locator("div.fixed.backdrop-blur-sm, div.fixed:has(input[name='productName'])").first().waitFor({ state: 'hidden', timeout: 5000 }).catch(() => {});
   }
 
   async isSaveButtonDisabled(): Promise<boolean> {
@@ -170,12 +186,13 @@ export class StockPage {
   }
 
   async isModalOpen(): Promise<boolean> {
-    return await this.modalContainer.first().isVisible().catch(() => false);
+    return await this.productNameInput.first().isVisible().catch(() => false);
   }
 
   async searchProduct(keyword: string) {
     await this.searchInput.first().waitFor({ state: 'visible', timeout: 10_000 });
     await this.searchInput.first().fill(keyword);
+    await this.searchInput.first().press('Enter');
     await this.page.waitForTimeout(1000);
   }
 

@@ -5,7 +5,9 @@
   "scripts": {
     "test": "playwright test",
     "test:login": "playwright test tests/login.spec.ts",
-    "test:stocks": "playwright test tests/stocks.spec.ts",
+    "test:stocks": "playwright test tests/stock.spec.ts",
+    "test:stock": "playwright test tests/stock.spec.ts",
+    "test:inv": "playwright test tests/inventory-management.spec.ts",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
