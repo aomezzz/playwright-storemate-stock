@@ -5,10 +5,14 @@
   "scripts": {
     "test": "playwright test",
     "test:login": "playwright test tests/login.spec.ts",
-    "test:stocks": "playwright test tests/stock.spec.ts",
     "test:stock": "playwright test tests/stock.spec.ts",
+    "test:stock:headed": "playwright test tests/stock.spec.ts --headed",
+    "test:stock:video": "cross-env VIDEO=on SLOWMO=1000 playwright test tests/stock.spec.ts",
+    "test:stock:video:headed": "cross-env VIDEO=on SLOWMO=1000 playwright test tests/stock.spec.ts --headed",
     "test:inv": "playwright test tests/inventory-management.spec.ts",
     "test:headed": "playwright test --headed",
+    "test:video": "cross-env VIDEO=on SLOWMO=1000 playwright test",
+    "test:video:headed": "cross-env VIDEO=on SLOWMO=1000 playwright test --headed",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
@@ -29,6 +33,7 @@
   "devDependencies": {
     "@playwright/test": "^1.64.0",
     "@types/node": "^26.6.5",
+    "cross-env": "^10.1.0",
     "dotenv": "^18.0.7",
     "typescript": "^7.0.2"
   }

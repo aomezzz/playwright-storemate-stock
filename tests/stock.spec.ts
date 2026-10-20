@@ -58,7 +58,7 @@ test.describe.serial('ระบบจัดการสินค้าและ�
     // 5. ตรวจสอบการแจ้งเตือนสำเร็จ (Toast Notification)
     const successToast = page.getByRole('status').first();
     await expect(successToast).toBeVisible({ timeout: 10_000 });
-    await expect(successToast).toContainText('เพิ่มสินค้า');
+    await expect(successToast).toContainText('เพิ่มสินค้าเรียบร้อยแล้ว');
 
     // 6. ตรวจสอบว่าสินค้าใหม่ปรากฏในรายการสินค้า
     const searchInput = page.getByPlaceholder('ค้นหาโดยชื่อสินค้า หรือ รหัสสินค้า');

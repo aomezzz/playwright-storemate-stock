@@ -77,8 +77,17 @@ cp .env.example .env
 ### 4.1 รันตามชุดทดสอบหลัก (Recommended Scripts)
 
 ```bash
-# 1. รันชุด Stock Management Codegen ตามเอกสาร Google Docs (TC-LOT-001 ถึง TC-LOT-010)
+# 1. รันเฉพาะไฟล์ stock.spec.ts (TC-LOT-001 ถึง TC-LOT-010)
 npm run test:stock
+
+# 1.1 รันเฉพาะไฟล์ stock.spec.ts แบบเปิดหน้าต่างเบราว์เซอร์จริง (Headed)
+npm run test:stock:headed
+
+# 1.2 รันเฉพาะไฟล์ stock.spec.ts พร้อมบันทึกวิดีโอ (ช้า step ละ 1 วินาที)
+npm run test:stock:video
+
+# 1.3 รันเฉพาะไฟล์ stock.spec.ts แบบเปิดหน้าต่างเบราว์เซอร์จริง + บันทึกวิดีโอ
+npm run test:stock:video:headed
 
 # 2. รันชุด Inventory Management UI Full Suite (TC-INV-001 ถึง TC-INV-013)
 npm run test:inv
@@ -99,6 +108,15 @@ npm test
 npm run test:headed
 # หรือ
 npx playwright test tests/stock.spec.ts --headed
+
+# รันแบบบันทึกวิดีโอ (ชะลอทีละ 1 วินาทีต่อ step อัตโนมัติ เพื่อให้ดูวิดีโอรู้เรื่อง)
+npm run test:video
+# หรือรันแบบเปิดหน้าต่างเบราว์เซอร์พร้อมบันทึกวิดีโอ
+npm run test:video:headed
+
+# รันเจาะจงไฟล์หรือเคสพร้อมบันทึกวิดีโอ (ช้า step ละ 1 วินาที)
+npm run test:video -- tests/stock.spec.ts
+npm run test:video -- -g "TC-LOT-001"
 
 # รันผ่าน Playwright UI Mode (Interactive Runner มี Timeline และ DOM Snapshot)
 npm run test:ui
